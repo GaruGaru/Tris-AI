@@ -1,8 +1,5 @@
 package com.garu.Game.AI;
 
-import com.garu.AI.MatrixHelper;
-
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,11 +7,9 @@ import java.util.List;
  */
 public class AIMinMaxEval extends AITris {
 
-    private int depth;
 
-    public AIMinMaxEval(int depth, int mySeed) {
-        this.depth = depth;
-        this.mySeed = mySeed;
+    public AIMinMaxEval(int depth, int seed) {
+        super(depth, seed);
     }
 
     @Override
@@ -56,25 +51,39 @@ public class AIMinMaxEval extends AITris {
     private int evaluate(int[][] matrix, int player) {
         int score = 0;
 
-        ArrayList<List<int[]>> paths = MatrixHelper.getPaths();
-        for (List<int[]> path : paths)
-            score += evaluateLine(matrix, player, path);
+        score += evaluateLine(matrix, player, 0, 0, 0, 1, 0, 2);
+        score += evaluateLine(matrix, player, 1, 0, 1, 1, 1, 2);
+        score += evaluateLine(matrix, player, 2, 0, 2, 1, 2, 2);
+        score += evaluateLine(matrix, player, 0, 0, 1, 0, 2, 0);
+        score += evaluateLine(matrix, player, 0, 1, 1, 1, 2, 1);
+        score += evaluateLine(matrix, player, 0, 2, 1, 2, 2, 2);
+        score += evaluateLine(matrix, player, 0, 0, 1, 1, 2, 2);
+        score += evaluateLine(matrix, player, 0, 2, 1, 1, 2, 0);
 
         return score;
     }
 
-    private int evaluateLine(int[][] matrix, int player, List<int[]> line) {
+
+    private int evaluateLine(int[][] matrix, int player, int r1, int c1, int r2, int c2, int r3, int c3) {
 
         int val = 0;
 
         int opp = getOpponent(player);
         int oppVal = 0, playerVal = 0;
 
-        for (int[] cell : line)
-            if (matrix[cell[0]][cell[1]] == player)
-                playerVal++;
-            else if (matrix[cell[0]][cell[1]] == opp)
-                oppVal++;
+        if (matrix[r1][c1] == mySeed)
+            playerVal++;
+        else if (matrix[r1][c1] == opp)
+            oppVal++;
+        if (matrix[r2][c2] == mySeed)
+            playerVal++;
+        else if (matrix[r2][c2] == opp)
+            oppVal++;
+        if (matrix[r3][c3] == mySeed)
+            playerVal++;
+        else if (matrix[r3][c3] == opp)
+            oppVal++;
+
 
         if (playerVal == 3)
             val = 100;
@@ -82,11 +91,11 @@ public class AIMinMaxEval extends AITris {
             val = -110;
 
         if (playerVal == 2) {
-            if (!(matrix[line.get(0)[0]][line.get(0)[1]] == player && matrix[line.get(2)[0]][line.get(2)[1]] == player)) {
+            if (!(matrix[r1][c1] == player && matrix[r1][c1] == player)) {
                 val = 10;
             }
-        }else if (oppVal == 2) {
-            if (!(matrix[line.get(0)[0]][line.get(0)[1]] == opp && matrix[line.get(2)[0]][line.get(2)[1]] == opp)) {
+        } else if (oppVal == 2) {
+            if (!(matrix[r1][c1] == opp && matrix[r3][c3] == opp)) {
                 val = -10;
             }
         }

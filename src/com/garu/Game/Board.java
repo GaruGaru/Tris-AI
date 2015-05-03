@@ -37,7 +37,7 @@ public class Board {
     }
 
 
-    private boolean hasWon(int[][] matrix, int player) {
+    public boolean hasWon(int[][] matrix, int player) {
         return (winningPattern(matrix, player, 0, 0, 0, 1, 0, 2) ||
                 winningPattern(matrix, player, 1, 0, 1, 1, 1, 2) ||
                 winningPattern(matrix, player, 2, 0, 2, 1, 2, 2) ||

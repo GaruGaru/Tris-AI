@@ -12,8 +12,13 @@ public abstract class AITris {
     public static final int EMPTY = 0;
     public static final int PL1 = 1;
     public static final int PL2 = 2;
-    protected  int mySeed;
+    protected int mySeed;
+    protected int depth;
 
+    public AITris(int depth, int seed) {
+        this.depth = depth;
+        this.mySeed = seed;
+    }
 
     public abstract int[] move(int[][] matrix);
 
@@ -32,12 +37,11 @@ public abstract class AITris {
         return moves;
     }
 
-    public void setSeed(int seed){
-        this.mySeed = seed;
-    }
-
-
     public int getSeed() {
         return mySeed;
+    }
+
+    public void setSeed(int seed) {
+        this.mySeed = seed;
     }
 }

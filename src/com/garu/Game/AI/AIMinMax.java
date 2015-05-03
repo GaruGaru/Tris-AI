@@ -7,11 +7,9 @@ import java.util.List;
  */
 public class AIMinMax extends AITris {
 
-    private int depth;
 
-    public AIMinMax(int depth, int mySeed) {
-        this.depth = depth;
-        this.mySeed = mySeed;
+    public AIMinMax(int depth, int seed) {
+        super(depth, seed);
     }
 
     @Override
