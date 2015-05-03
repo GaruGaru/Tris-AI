@@ -13,7 +13,7 @@ public class Board {
     private AITris player2;
 
     private boolean turn;
-
+    private boolean firstMove;
 
     public Board(int[][] matrix, AITris player1, AITris player2) {
         this.matrix = matrix;
@@ -21,7 +21,6 @@ public class Board {
         this.player2 = player2;
         this.player1.setSeed(AITris.PL1);
         this.player2.setSeed(AITris.PL2);
-        this.turn = true;
     }
 
     public void step() {
@@ -32,10 +31,11 @@ public class Board {
     }
 
     public void play() {
-        while (!isGameFinished(matrix))
+        turn = firstMove;
+        while (!isGameFinished(matrix)) {
             step();
+        }
     }
-
 
     public boolean hasWon(int[][] matrix, int player) {
         return (winningPattern(matrix, player, 0, 0, 0, 1, 0, 2) ||
@@ -65,13 +65,25 @@ public class Board {
         return (hasWon(matrix, AITris.PL1) || hasWon(matrix, AITris.PL2) || isFull(matrix));
     }
 
-    private void reset() {
+    public void reset() {
         for (int x = 0; x < matrix.length; x++)
             for (int y = 0; y < matrix[0].length; y++)
                 matrix[x][y] = 0;
+        firstMove = !firstMove;
     }
 
     public int[][] getMatrix() {
         return matrix;
+    }
+
+    public int getWinner(int[][] matrix) {
+        if (hasWon(matrix, AITris.PL1)) return AITris.PL1;
+        else if (hasWon(matrix, AITris.PL2)) return AITris.PL2;
+        else return 0; // or else->just return 0
+    }
+
+    public void setPlayer2(AITris player2) {
+        this.player2 = player2;
+        this.player2.setSeed(AITris.PL2);
     }
 }

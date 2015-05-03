@@ -1,15 +1,20 @@
-package com.garu.Game.AI;
+package com.garu.Game.AI.Genetics.Utils;
+
+import com.garu.Game.AI.AITris;
+import com.garu.Game.AI.Genetics.Individual;
 
 import java.util.List;
 
 /**
  * Created by Garu on 27/04/2015.
  */
-public class AIMinMaxEval extends AITris {
+public class IndividualPlayer extends AITris {
 
+    private int[] chromosome;
 
-    public AIMinMaxEval(int depth, int seed) {
+    public IndividualPlayer(Individual individual, int depth, int seed) {
         super(depth, seed);
+        this.chromosome = individual.getChromosome();
     }
 
     @Override
@@ -86,27 +91,27 @@ public class AIMinMaxEval extends AITris {
 
 
         if (playerVal == 3)
-            val = 100;
+            val = chromosome[0];
         else if (oppVal == 3)
-            val = -150;
+            val = chromosome[1];
 
         if (playerVal == 2) {
             if (!(matrix[r1][c1] == player && matrix[r1][c1] == player)) {
-                val = 10;
+                val = chromosome[2];
             }
         } else if (oppVal == 2) {
             if (!(matrix[r1][c1] == opp && matrix[r3][c3] == opp)) {
-                val = -10;
+                val = chromosome[3];
             }
         }
 
         if (playerVal == 1)
-            val = 1;
+            val = chromosome[4];
         else if (oppVal == 1)
-            val = -1;
+            val = chromosome[5];
 
         if (matrix[1][1] == player)
-            val += 1;
+            val += chromosome[6];
 
         return val;
 
