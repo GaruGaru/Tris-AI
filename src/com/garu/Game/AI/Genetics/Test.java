@@ -14,18 +14,19 @@ import java.util.Arrays;
 public class Test {
 
     public static void main(String[] args) {
-        Population population = new Population(50);
+        Population population = new Population(1000);
 
         AITris firstIndividual = new IndividualPlayer(population.getFittest(), 5, 0);
 
         Board board = new Board(new int[3][3], new AIMinMaxEval(5, 0), firstIndividual);
 
-        for (int i = 0; i < 100; i++) {
+        for (int i = 0; i < 20000; i++) {
 
             population.evolve();
 
             System.out.println("\n\nGeneration " + i);
             System.out.println("Best Chromosome: " + Arrays.toString(population.getFittest().getChromosome()));
+
             board.setPlayer2(new IndividualPlayer(population.getFittest(), 5, 0));
 
             board.play();

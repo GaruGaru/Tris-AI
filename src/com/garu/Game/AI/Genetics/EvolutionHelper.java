@@ -7,7 +7,7 @@ import com.garu.Game.AI.Genetics.Utils.MathUtils;
  */
 public class EvolutionHelper {
 
-    private static final float MUTATION_RATE = 0.005F;
+    private static final float MUTATION_RATE = 0.5F;
     private static final double uniformRate = 0.50;
 
     public static Individual crossHover(Individual ind1, Individual ind2) {
@@ -25,6 +25,9 @@ public class EvolutionHelper {
 
 
     public static void mutate(Individual individual) {
+
+        individual.selfAlterateChromosome(0.2F);
+
         for (int i = 0; i < Individual.CHROMOSOME_LENGHT; i++)
             if (Math.random() <= MUTATION_RATE) {
                 int[] integers = new int[]{MathUtils.getRandom().nextInt(Individual.CHROMOSOME_LENGHT), MathUtils.getRandom().nextInt(Individual.CHROMOSOME_LENGHT)};

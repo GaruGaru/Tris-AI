@@ -18,7 +18,6 @@ public class Individual {
 
     public Individual() {
         this.chromosome = new int[CHROMOSOME_LENGHT];
-        //   this.chromosome = Arrays.copyOf(STANDARD_CHROMOSOME, CHROMOSOME_LENGHT);
         this.chromosome = MathUtils.randomIntArray(7, -200, 200);
     }
 

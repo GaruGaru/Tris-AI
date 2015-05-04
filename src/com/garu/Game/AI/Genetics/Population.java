@@ -12,13 +12,13 @@ public class Population {
     private int size;
     private Individual[] population;
 
-
     public Population(int size) {
         this.population = new Individual[size];
         for (int i = 0; i < population.length; i++) {
             this.population[i] = new Individual();
             this.population[i].selfAlterateChromosome(0.3F);
         }
+        this.size = size;
     }
 
     public void evolve() {

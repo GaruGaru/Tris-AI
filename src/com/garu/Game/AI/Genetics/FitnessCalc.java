@@ -12,7 +12,7 @@ public class FitnessCalc {
 
     public static int getFitness(Individual individual) {
 
-        int games = 100;
+        int games = 10;
         float score = games * 10;
         int depth = 3;
 
@@ -24,7 +24,7 @@ public class FitnessCalc {
             else if (board.hasWon(board.getMatrix(), AITris.PL1))
                 score--;
             else
-                score -= 0.25F;
+                score -= 1F;
             board.reset();
         }
         return (int) score;
