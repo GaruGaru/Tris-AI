@@ -24,7 +24,7 @@ public class FitnessCalc {
             else if (board.hasWon(board.getMatrix(), AITris.PL1))
                 score--;
             else
-                score -= 1F;
+                score -= 0.5F;
             board.reset();
         }
         return (int) score;

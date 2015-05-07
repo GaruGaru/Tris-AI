@@ -7,18 +7,16 @@ package com.garu.Game.AI.Genetics;
 
 public class Population {
 
-    private static final int tournamentSize = 10;
+    private int tournamentSize = 10;
 
-    private int size;
     private Individual[] population;
 
     public Population(int size) {
         this.population = new Individual[size];
         for (int i = 0; i < population.length; i++) {
             this.population[i] = new Individual();
-            this.population[i].selfAlterateChromosome(0.3F);
         }
-        this.size = size;
+
     }
 
     public void evolve() {
@@ -28,7 +26,7 @@ public class Population {
 
         for (int i = 1; i < population.length; i++) {
             Individual ind1 = EvolutionHelper.tournamentSelection(tournamentSize, this);
-            Individual ind2 = EvolutionHelper.tournamentSelection(tournamentSize / 2, this);
+            Individual ind2 = EvolutionHelper.tournamentSelection(tournamentSize, this);
             Individual crossIndividual = EvolutionHelper.crossHover(ind1, ind2);
             EvolutionHelper.mutate(crossIndividual);
 
@@ -54,7 +52,7 @@ public class Population {
     }
 
     public int getSize() {
-        return size;
+        return population.length;
     }
 
     public Individual getIndividual(int pos) {
