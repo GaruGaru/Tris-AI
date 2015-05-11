@@ -23,8 +23,11 @@ public class Population {
         Population newPopulation = new Population(population.length);
 
         newPopulation.setIndividual(0, getFittest());
+        newPopulation.setIndividual(1,getFittest());
 
-        for (int i = 1; i < population.length; i++) {
+        getIndividual(2).selfAlterateChromosome(0.50F);
+
+        for (int i = 2; i < population.length; i++) {
             Individual ind1 = EvolutionHelper.tournamentSelection(tournamentSize, this);
             Individual ind2 = EvolutionHelper.tournamentSelection(tournamentSize, this);
             Individual crossIndividual = EvolutionHelper.crossHover(ind1, ind2);
@@ -41,7 +44,7 @@ public class Population {
     public Individual getFittest() {
         Individual fittest = population[0];
         for (Individual i : population)
-            if (i.getFitness() > fittest.getFitness())
+            if (i.getFitness() >=+ fittest.getFitness())
                 fittest = i;
         return fittest;
     }

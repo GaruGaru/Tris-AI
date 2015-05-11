@@ -1,5 +1,6 @@
 package com.garu.Game.AI.Genetics;
 
+import com.garu.Game.AI.Genetics.Fitness.FitnessCalc;
 import com.garu.Game.AI.Genetics.Utils.MathUtils;
 
 /**

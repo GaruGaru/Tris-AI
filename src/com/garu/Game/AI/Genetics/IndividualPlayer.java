@@ -1,4 +1,4 @@
-package com.garu.Game.AI.Genetics.Utils;
+package com.garu.Game.AI.Genetics;
 
 import com.garu.Game.AI.AITris;
 import com.garu.Game.AI.Genetics.Individual;

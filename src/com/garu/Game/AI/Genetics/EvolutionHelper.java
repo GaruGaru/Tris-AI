@@ -26,7 +26,7 @@ public class EvolutionHelper {
 
     public static void mutate(Individual individual) {
 
-        individual.selfAlterateChromosome(0.2F);
+        individual.selfAlterateChromosome(0.5F);
 
         for (int i = 0; i < Individual.CHROMOSOME_LENGHT; i++)
             if (Math.random() <= MUTATION_RATE) {

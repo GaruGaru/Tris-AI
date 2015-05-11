@@ -1,24 +1,28 @@
-package com.garu.Game.AI;
+package com.garu.Game.AI.Genetics;
+
+import com.garu.Game.AI.AITris;
 
 import java.util.List;
 
 /**
  * Created by Garu on 27/04/2015.
  */
-public class AIMinMaxEval extends AITris {
+public class IndividualPlayerPruning extends AITris {
 
+    private int[] chromosome;
 
-    public AIMinMaxEval(int depth, int seed) {
+    public IndividualPlayerPruning(Individual individual, int depth, int seed) {
         super(depth, seed);
+        this.chromosome = individual.getChromosome();
     }
 
     @Override
     public int[] move(int[][] matrix) {
-        int[] minmax = minmax(matrix, mySeed, depth);
+        int[] minmax = minmax(matrix, mySeed, depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
         return new int[]{minmax[1], minmax[2]};
     }
 
-    public int[] minmax(int[][] matrix, int player, int depth) {
+    public int[] minmax(int[][] matrix, int player, int depth, int alpha, int beta) {
 
         int bRow = -1, bColumn = -1;
         int bScore = (player == mySeed) ? Integer.MIN_VALUE : Integer.MAX_VALUE;
@@ -32,15 +36,23 @@ public class AIMinMaxEval extends AITris {
             for (int[] move : moves) {
                 matrix[move[0]][move[1]] = player;
 
-                currScore = minmax(matrix, getOpponent(player), depth - 1)[0];
+                currScore = minmax(matrix, getOpponent(player), depth - 1, alpha, beta)[0];
 
                 if ((player == mySeed && currScore > bScore) || (player != mySeed && currScore < bScore)) {
+                    boolean ab = (mySeed == player);
                     bScore = currScore;
                     bRow = move[0];
                     bColumn = move[1];
+
+                    if (ab)
+                        alpha = currScore;
+                    else
+                        beta = currScore;
                 }
 
+
                 matrix[move[0]][move[1]] = EMPTY;
+                if (alpha > beta) break;
 
             }
         }
@@ -84,28 +96,29 @@ public class AIMinMaxEval extends AITris {
         else if (matrix[r3][c3] == opp)
             oppVal++;
 
+
         if (playerVal == 3)
-            val = 100;
+            val = chromosome[0];
         else if (oppVal == 3)
-            val = -150;
+            val = chromosome[1];
 
         if (playerVal == 2) {
             if (!(matrix[r1][c1] == player && matrix[r1][c1] == player)) {
-                val = 10;
+                val = chromosome[2];
             }
         } else if (oppVal == 2) {
             if (!(matrix[r1][c1] == opp && matrix[r3][c3] == opp)) {
-                val = -10;
+                val = chromosome[3];
             }
         }
 
         if (playerVal == 1)
-            val = 1;
+            val = chromosome[4];
         else if (oppVal == 1)
-            val = -1;
+            val = chromosome[5];
 
         if (matrix[1][1] == player)
-            val += 1;
+            val += chromosome[6];
 
         return val;
 

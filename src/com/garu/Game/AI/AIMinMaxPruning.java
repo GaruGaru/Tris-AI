@@ -5,20 +5,24 @@ import java.util.List;
 /**
  * Created by Garu on 27/04/2015.
  */
-public class AIMinMaxEval extends AITris {
+public class AIMinMaxPruning extends AITris {
 
 
-    public AIMinMaxEval(int depth, int seed) {
+    public AIMinMaxPruning(int depth, int seed) {
         super(depth, seed);
     }
 
     @Override
     public int[] move(int[][] matrix) {
-        int[] minmax = minmax(matrix, mySeed, depth);
+        int[] minmax = minmax(matrix, mySeed, depth, Integer.MIN_VALUE, Integer.MAX_VALUE);
         return new int[]{minmax[1], minmax[2]};
     }
 
-    public int[] minmax(int[][] matrix, int player, int depth) {
+    /**
+     * First run +inf -inf
+     */
+
+    public int[] minmax(int[][] matrix, int player, int depth, int alpha, int beta) {
 
         int bRow = -1, bColumn = -1;
         int bScore = (player == mySeed) ? Integer.MIN_VALUE : Integer.MAX_VALUE;
@@ -32,15 +36,23 @@ public class AIMinMaxEval extends AITris {
             for (int[] move : moves) {
                 matrix[move[0]][move[1]] = player;
 
-                currScore = minmax(matrix, getOpponent(player), depth - 1)[0];
+                currScore = minmax(matrix, getOpponent(player), depth - 1, alpha, beta)[0];
 
                 if ((player == mySeed && currScore > bScore) || (player != mySeed && currScore < bScore)) {
+                    boolean ab = (mySeed == player);
                     bScore = currScore;
                     bRow = move[0];
                     bColumn = move[1];
+
+                    if (ab)
+                        alpha = currScore;
+                    else
+                        beta = currScore;
                 }
 
+
                 matrix[move[0]][move[1]] = EMPTY;
+                if (alpha > beta) break;
 
             }
         }

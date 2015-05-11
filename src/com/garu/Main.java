@@ -3,6 +3,8 @@ package com.garu;
 
 import com.garu.Game.AI.AIMinMax;
 import com.garu.Game.AI.AIMinMaxEval;
+import com.garu.Game.AI.AIMinMaxPruning;
+import com.garu.Game.AI.AIRandom;
 import com.garu.Game.Board;
 
 import java.io.IOException;
@@ -17,7 +19,7 @@ public class Main {
         int games = 100;
 
 
-        Board board = new Board(new int[3][3], new AIMinMaxEval(5, 2), new AIMinMax(5, 1));
+        Board board = new Board(new int[3][3], new AIRandom(5, 2), new AIMinMaxPruning(5, 1));
         for (int i = 0; i < games; i++) {
 
             board.play();
